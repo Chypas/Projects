@@ -8,3 +8,4 @@ def total_salary(path):
         for elem in lines:
             salary += float(elem.split(","))
             print(salary)
+            
