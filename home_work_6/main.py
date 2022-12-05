@@ -23,6 +23,4 @@ for any_path in list_path:
             shutil.rmtree(any_path)
     else:
         sort_files(any_path)
-list_sort_done = list(path_folder.iterdir())
-# print("You're welcome.\n", list_sort_done)
 print("You're welcome.")
