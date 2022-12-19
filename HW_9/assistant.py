@@ -1,12 +1,8 @@
-
-
-
-
-
 adress_book = {}
 end_comand = ["end", "exit", "out", "close", "."]
 a_b = {}
 user_input = ""
+
 
 def add_func(user_input):
     a_b = {user_input[1]: user_input[2]}
@@ -47,9 +43,9 @@ def main():
 
         elif user_input[0] == "show":
             for key, value in adress_book.items():
-                print("{0}: {1}".format(key,value))
+                print("{0}: {1}".format(key, value))
             user_input = input().lower().split(" ")
-            
+
         elif user_input[0] in end_comand:
             print("Good bye!")
             break
