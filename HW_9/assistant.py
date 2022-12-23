@@ -1,25 +1,34 @@
+def decorator(func):
+    def wrapper(*args):
+        try:
+            return func(*args)
+        except IndexError:
+            print("Sorry, try again")
+    return wrapper
+
+
 adress_book = {}
 end_comand = ["end", "exit", "out", "close", "."]
 a_b = {}
 user_input = ""
 
-
+@decorator
 def add_func(user_input):
     a_b = {user_input[1]: user_input[2]}
     adress_book.update(a_b)
     a_b = {}
 
-
+@decorator
 def change_func(user_input):
     adress_book[user_input[1]] = user_input[2]
 
-
+@decorator
 def phone_func(user_input):
     for k, v in adress_book.items():
         if user_input[1] in k:
             print(v)
 
-
+@decorator
 def main():
     print("Hello!")
     global user_input
@@ -54,3 +63,5 @@ def main():
 
 
 main()
+
+
