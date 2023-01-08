@@ -97,6 +97,7 @@ if __name__ == '__main__':
     assert isinstance(ab['Bill'].phones, list)
     assert isinstance(ab['Bill'].phones[0], Phone)
     assert ab['Bill'].phones[0].value == '1234567890'
-    print('All Ok)')
+    print("All Ok)")
     print(str(ab))
     print(bill.days_to_birthday())
+    
