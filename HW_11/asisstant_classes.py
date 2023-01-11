@@ -31,11 +31,12 @@ class AddressBook(UserDict):
 
 
 class Field:
-    def __init__(self, value):
+    def __init__(self, name, birthday=None, phone=None):
+        self.name = name
         self.__private_phone = None
         self.__private_birthday = None
-        self.phone = value
-        self.birthday = value
+        self.birthday = birthday
+        self.phone = phone
 
     @property
     def phone(self):
@@ -54,7 +55,7 @@ class Field:
 
     @birthday.setter
     def birthday(self, value: str):
-        if value.isalnum():
+        if value:
             self.__private_birthday = value
         else:
             raise Exception("Wrong type of birthday.")
@@ -126,13 +127,13 @@ if __name__ == '__main__':
     phone = Phone('0987654321')
     roman = Record(name, birthday, phone)
     ab.add_record(roman)
-    # assert isinstance(ab['Bill'], Record)
-    # assert isinstance(ab['Bill'].name, Name)
-    # assert isinstance(ab['Bill'].birthday, Birthday)
-    # assert isinstance(ab['Bill'].phones, list)
-    # assert isinstance(ab['Bill'].phones[0], Phone)
-    # assert ab['Bill'].phones[0].value == '1234567890'
-    # print("All Ok)")
+    assert isinstance(ab['Bill'], Record)
+    assert isinstance(ab['Bill'].name, Name)
+    assert isinstance(ab['Bill'].birthday, Birthday)
+    assert isinstance(ab['Bill'].phones, list)
+    assert isinstance(ab['Bill'].phones[0], Phone)
+    assert ab['Bill'].phones[0].value == '1234567890'
+    print("All Ok)")
     print(str(ab))
     print(roman.days_to_birthday())
     print(ab.next(1))
