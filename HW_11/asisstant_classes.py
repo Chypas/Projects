@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import datetime
+import re
 
 
 class AddressBook(UserDict):
@@ -32,11 +33,24 @@ class AddressBook(UserDict):
 
 class Field:
     def __init__(self, name, birthday=None, phone=None):
+        # self.value = value
         self.name = name
         self.__private_phone = None
         self.__private_birthday = None
         self.birthday = birthday
         self.phone = phone
+
+    @property
+    def birthday(self):
+        return self.__private_birthday
+
+    @birthday.setter
+    def birthday(self, value: str):
+        sb = re.search("\d{2} [a-zA-Z]+ \d{4}", str(value)) is not None
+        if sb == True:
+            self.__private_birthday = value
+        else:
+            raise Exception("Wrong type of birthday.")
 
     @property
     def phone(self):
@@ -48,17 +62,6 @@ class Field:
             self.__private_phone = value
         else:
             raise Exception("Wrong number.")
-
-    @property
-    def birthday(self):
-        return self.__private_birthday
-
-    @birthday.setter
-    def birthday(self, value: str):
-        if value:
-            self.__private_birthday = value
-        else:
-            raise Exception("Wrong type of birthday.")
 
     def __repr__(self) -> str:
         return f"{self.value}"
@@ -134,6 +137,3 @@ if __name__ == '__main__':
     assert isinstance(ab['Bill'].phones[0], Phone)
     assert ab['Bill'].phones[0].value == '1234567890'
     print("All Ok)")
-    print(str(ab))
-    print(roman.days_to_birthday())
-    print(ab.next(1))
