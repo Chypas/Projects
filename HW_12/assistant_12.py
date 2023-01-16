@@ -145,9 +145,7 @@ if __name__ == '__main__':
     ab.add_record(bill)
 
     name = Name("Roman")
-    birthday = Birthday('24 may 2000')
+    birthday = Birthday('24 june 2000')
     phone = Phone('0987654321')
     roman = Record(name, birthday, phone)
     ab.add_record(roman)
-   
-    
