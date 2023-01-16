@@ -10,53 +10,72 @@ class AddressBook(UserDict):
         self.data[rec.name.value] = rec
 
     def iterator(self, n=2):
-        self.n = n
+        self.n = n 
         index = 1
-        print_block = '-' * 50 + '\n'
-        for name, record in self.data.items():
-            print_block += str(name)+":" + " " + str(record) + '\n'
+        print_block = '-' * 50 + '\n'  
+        for record in self.data.values(): 
+            print_block += str(record) + '\n'
             if index < n:
                 index += 1
             else:
                 yield print_block
                 index, print_block = 1, '-' * 50 + '\n'
-        yield print_block
+        yield print_block 
 
     def next(self, n=2):
         result = "List of all users:\n"
         print_list = self.iterator(n)
-        for item in print_list:
-            result += f"{item}"
+        for item in print_list:  
+            result += f"{item}"  
         return result
+    
+    # def inf(self, text):
+    #     for record in self.data.values(): 
+    #         if text in record:
+    #             return record  
+    
+    # def write_to_file(self):
+    #     file_name = 'Adress book.txt'
+    #     with open(file_name, "wb") as fh:
+    #         pickle.dump(self.data, fh)
 
-    def inf(self, text):
-        for name, record in self.data.items():
-            pass
-
-    def write_to_file(self):
-        file_name = 'Adress book.txt'
-        with open(file_name, "wb") as fh:
-            pickle.dump(self.data, fh)
-
-    def load_from_file(self):
-        file_name = 'Adress book.txt'
-        with open(file_name, "rb") as fh:
-            unpacked = pickle.load(fh)
-            self.data.update(unpacked)
-
-
+    # def load_from_file(self):
+    #     file_name = 'Adress book.txt'
+    #     with open(file_name, "rb") as fh:
+    #         unpacked = pickle.load(fh)
+    #         self.data.update(unpacked)
+        
 class Field:
+    def __init__(self, name, birthday=None, phone=None):
+        # self.value = value
+        self.name = name
+        self.__private_phone = None
+        self.__private_birthday = None
+        self.birthday = birthday
+        self.phone = phone
 
-    def __init__(self, value):
-        self.value = value
+    @property
+    def birthday(self):
+        return self.__private_birthday
 
-    @ property
-    def value(self):
-        return self.__value
+    @birthday.setter
+    def birthday(self, value: str):
+        sb = re.search("\d{2} [a-zA-Z]+ \d{4}", str(value)) is not None
+        if sb == True:
+            self.__private_birthday = value
+        else:
+            raise Exception("Wrong type of birthday.")
 
-    @ value.setter
-    def value(self, new_value):
-        self.__value = new_value
+    @property
+    def phone(self):
+        return self.__private_phone
+
+    @phone.setter
+    def phone(self, value: str):
+        if value.isdigit():
+            self.__private_phone = value
+        else:
+            raise Exception("Wrong number.")
 
     def __repr__(self) -> str:
         return f"{self.value}"
@@ -70,30 +89,11 @@ class Name(Field):
 
 
 class Phone(Field):
-    @property
-    def value(self):
-        return self.__value
-
-    @value.setter
-    def value(self, value: str):
-        if value.isdigit():
-            self.__value = value
-        else:
-            raise Exception("Wrong number.")
+    pass
 
 
 class Birthday(Field):
-    @property
-    def value(self):
-        return self.__value
-
-    @value.setter
-    def value(self, value: str):
-        sb = re.search(r"\d{2} [a-zA-Z]+ \d{4}", str(value)) is not None
-        if sb == True:
-            self.__value = value
-        else:
-            raise Exception("Wrong type of birthday.")
+    pass
 
 
 class Record:
@@ -133,7 +133,7 @@ class Record:
 
 if __name__ == '__main__':
     name = Name('Bill')
-    birthday = Birthday('24 june 1990')
+    birthday = Birthday('24 august 1990')
     phone = Phone('1234567890')
     bill = Record(name, birthday, phone)
     ab = AddressBook()
@@ -144,4 +144,11 @@ if __name__ == '__main__':
     phone = Phone('0987654321')
     roman = Record(name, birthday, phone)
     ab.add_record(roman)
-    print(ab.next())
+    assert isinstance(ab['Bill'], Record)
+    assert isinstance(ab['Bill'].name, Name)
+    assert isinstance(ab['Bill'].birthday, Birthday)
+    assert isinstance(ab['Bill'].phones, list)
+    assert isinstance(ab['Bill'].phones[0], Phone)
+    assert ab['Bill'].phones[0].value == '1234567890'
+    print("All Ok)")
+    print(type(birthday))
